@@ -1,0 +1,46 @@
+.root {
+    display: flex;
+}
+
+.toolbar {
+    background-color: #96CF4C;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 1280px) {
+    .toolbar {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
+}
+
+.ini {
+    display: flex;
+    align-items: center;
+}
+
+.navlinks {
+    margin-left: 8rem;
+    display: flex;
+}
+
+.logo {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.link {
+    text-decoration: none;
+    color: #45291D;
+    font-size: 1.25rem;
+    margin-left: 8rem,
+}
+
+.link:hover {
+    color: #F1E14B;
+}
