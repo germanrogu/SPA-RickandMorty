@@ -1,0 +1,39 @@
+
+h5 {
+    margin: 0px;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+p {
+    font-size: 12px;
+}
+
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.property_card {
+    height: 18em;
+    width: 14em;
+    display: flex;
+    justify-content: center;
+    border-radius: 16px;
+    overflow: hidden;
+    -webkit-box-shadow: 15px 15px 27px #e1e1e3, -15px -15px 27px #ffffff;
+    box-shadow: 15px 15px 27px #e1e1e3, -15px -15px 27px #ffffff;
+}
+
+.property_description {
+    background-color: #ffffff;
+    padding: 0.5em 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
