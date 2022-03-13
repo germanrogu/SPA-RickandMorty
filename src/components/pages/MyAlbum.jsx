@@ -1,10 +1,13 @@
 import { Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AlbumContext } from "../../context/AlbumContext";
 import { ButtonCustom } from "../ui/atoms/ButtonCustom/ButtonCustom";
 import { ContentPages } from "../ui/atoms/ContentPages/ContentPages";
 
 export const MyAlbum = () => {
+  const { albumArray } = useContext(AlbumContext);
+  console.log(albumArray)
   return (
     <ContentPages>
       <Typography
