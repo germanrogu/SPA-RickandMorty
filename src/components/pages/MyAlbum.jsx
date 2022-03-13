@@ -1,7 +1,48 @@
-import React from 'react'
+import { Typography } from "@mui/material";
+import React from "react";
+import { Link } from "react-router-dom";
+import { ButtonCustom } from "../ui/atoms/ButtonCustom/ButtonCustom";
+import { ContentPages } from "../ui/atoms/ContentPages/ContentPages";
 
 export const MyAlbum = () => {
   return (
-    <div>MyAlbum</div>
-  )
-}
+    <ContentPages>
+      <Typography
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          fontSize: "1.8rem",
+          fontWeight: "600",
+          color: "#722f37",
+          paddingTop: "1.3rem",
+          paddingBottom: "1.8rem",
+        }}
+      >
+        {" My Album "}
+      </Typography>
+
+      <Typography
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "2rem",
+          marginBottom: "2rem",
+          fontSize: "1.2rem",
+        }}
+      >
+        Empty album
+      </Typography>
+      <Link
+        to={`/GetCards`}
+        style={{
+          display: "flex",
+          textDecoration: "none",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <ButtonCustom>Go to Get cards</ButtonCustom>
+      </Link>
+    </ContentPages>
+  );
+};
