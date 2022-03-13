@@ -6,9 +6,12 @@ import { Timer } from "../ui/atoms/Timer/Timer";
 import { SheetContainer } from "../ui/molecules/SheetContainer/SheetContainer";
 import { TargetCards } from "../ui/organism/TargetCards/TargetCards";
 import axios from "axios";
+import { EpisodeSheetContainer } from "../ui/molecules/EpisodeSheetContainer/EpisodeSheetContainer";
+import { AlbumContext } from "../../context/AlbumContext";
 
 export const GetCards = () => {
   const { activeTimer, resetTimer, seconds } = useContext(TimeCardContext);
+  const { addToAlbum } = useContext(AlbumContext);
   const [disabled, setDisabled] = useState(false);
   const [clicked, setClicked] = useState(false);
 
@@ -16,7 +19,25 @@ export const GetCards = () => {
     console.log("Cual", target);
     activeTimer();
     setClicked(true);
-    fetchCharacters(url)
+    getApi(4, "characters");
+    getApi(1, "episodes");
+  };
+
+  const getApi = (iterations, option) => {
+    let url;
+    for (let i = 0; i < iterations; i++) {
+      if (option === "characters") {
+        url = `https://rickandmortyapi.com/api/character/${randomNumber(826)}`;
+        fetchCharacters(url, option);
+      } else if (option === "episodes") {
+        url = `https://rickandmortyapi.com/api/episode/${randomNumber(51)}`;
+        fetchCharacters(url, option);
+      }
+    }
+  };
+
+  const randomNumber = (max) => {
+    return Math.floor(Math.random() * (max - 1 + 1) + 1);
   };
 
   useEffect(() => {
@@ -29,24 +50,35 @@ export const GetCards = () => {
     }
   }, [clicked, resetTimer, seconds]);
 
-
-
   const [characters, setCharacters] = useState([]);
-  const [info, setInfo] = useState({});
-  const url = "https://rickandmortyapi.com/api/character";
+  const [episodes, setEpisodes] = useState([]);
 
-  const fetchCharacters = (url) => {
+  let arrayCharacters = [];
+  let arrayEpisodes = [];
+
+  const fetchCharacters = (url, option) => {
     axios
       .get(url)
       .then((data) => {
-        setCharacters(data.data.results);
-        setInfo(data.data.info);
+        let objectData = data.data;
+
+        if (option === "characters") {
+          arrayCharacters.push(objectData);
+          setCharacters(arrayCharacters);
+        } else if (option === "episodes") {
+          arrayEpisodes.push(objectData);
+          setEpisodes(arrayEpisodes);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  const onClickSheet = (item) => {
+    console.log("Click en la card", item);
+    addToAlbum(item)
+  };
 
   return (
     <>
@@ -73,8 +105,8 @@ export const GetCards = () => {
         />
         <Timer seconds={seconds} />
 
-
-        <SheetContainer items={characters}/>
+        <SheetContainer onClick={onClickSheet} items={characters} />
+        <EpisodeSheetContainer items={episodes} />
       </ContentPages>
     </>
   );
