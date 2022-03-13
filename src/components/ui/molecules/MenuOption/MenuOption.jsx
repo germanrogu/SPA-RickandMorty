@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { MenuNav } from "../../atoms/MenuNav/MenuNav";
 
-export const MenuOption = ({ icon, tooltip, items, menuButton }) => {
+export const MenuOption = ({ icon, tooltip, items }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const openAccount = Boolean(anchorEl);
 
@@ -34,7 +34,6 @@ export const MenuOption = ({ icon, tooltip, items, menuButton }) => {
       </Tooltip>
 
       <MenuNav
-        menuButton={menuButton}
         anchorEl={anchorEl}
         open={openAccount}
         onClose={handleClose}

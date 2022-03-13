@@ -11,7 +11,7 @@ const StyledMenu = styled(Menu)({
   },
 });
 
-export const MenuNav = ({ anchorEl, open, onClose, items, menuButton }) => {
+export const MenuNav = ({ anchorEl, open, onClose, items }) => {
   return (
     <StyledMenu
       elevation={0}
@@ -28,7 +28,7 @@ export const MenuNav = ({ anchorEl, open, onClose, items, menuButton }) => {
     >
       {items.map((item) => (
         <Link
-          to={`/${item}`}
+          to={`/${item.split(" ").join("")}`}
           style={{
             display: "flex",
             textDecoration: "none",

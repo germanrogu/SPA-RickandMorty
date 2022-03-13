@@ -28,9 +28,8 @@ export const AppBarCustom = () => {
             }}
           >
             <MenuOption
-              menuButton={"category"}
               icon={<MenuIcon fontSize="large" />}
-              tooltip={"Categories"}
+              tooltip={"Options"}
               items={pages}
             />
           </Grid>

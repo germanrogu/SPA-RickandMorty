@@ -16,6 +16,9 @@ const CustomButton = styled(Button)({
     backgroundColor: alpha("#F1E14B", 0.5),
     color: "#45291D",
   },
+  "&.MuiButton-root:disabled": {
+    backgroundColor: '#f7f7f76b',
+  },
 });
 
 /**
@@ -26,9 +29,11 @@ export const ButtonCustom = ({
   type = "button",
   backgroundColor,
   onClick,
+  disabled,
 }) => {
   return (
     <CustomButton
+      disabled={disabled}
       style={{ backgroundColor }}
       fullWidth
       type={type}
