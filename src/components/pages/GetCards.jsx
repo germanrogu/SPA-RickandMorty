@@ -8,19 +8,18 @@ import { TargetCards } from "../ui/organism/TargetCards/TargetCards";
 import axios from "axios";
 import { EpisodeSheetContainer } from "../ui/molecules/EpisodeSheetContainer/EpisodeSheetContainer";
 import { AlbumContext } from "../../context/AlbumContext";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export const GetCards = () => {
   const { activeTimer, resetTimer, seconds } = useContext(TimeCardContext);
   const { addToAlbum } = useContext(AlbumContext);
   const [disabled, setDisabled] = useState(false);
-  const [clicked, setClicked] = useState(false);
+  const [characters, setCharacters] = useState([]);
+  const [episodes, setEpisodes] = useState([]);
+  const [clicked, setClicked] = useLocalStorage(false, "clicked");
 
-  const onClick = (target) => {
-    console.log("Cual", target);
-    activeTimer();
-    setClicked(true);
-    getApi(4, "characters");
-    getApi(1, "episodes");
+  const randomNumber = (max) => {
+    return Math.floor(Math.random() * (max - 1 + 1) + 1);
   };
 
   const getApi = (iterations, option) => {
@@ -36,10 +35,6 @@ export const GetCards = () => {
     }
   };
 
-  const randomNumber = (max) => {
-    return Math.floor(Math.random() * (max - 1 + 1) + 1);
-  };
-
   useEffect(() => {
     if (clicked) {
       seconds < 60 ? setDisabled(true) : setDisabled(false);
@@ -49,9 +44,6 @@ export const GetCards = () => {
       }
     }
   }, [clicked, resetTimer, seconds]);
-
-  const [characters, setCharacters] = useState([]);
-  const [episodes, setEpisodes] = useState([]);
 
   let arrayCharacters = [];
   let arrayEpisodes = [];
@@ -75,39 +67,39 @@ export const GetCards = () => {
       });
   };
 
+  const onClick = (target) => {
+    console.log("Cual", target);
+    activeTimer();
+    setClicked(true);
+    getApi(4, "characters");
+    getApi(1, "episodes");
+  };
+
   const onClickSheet = (item) => {
     console.log("Click en la card", item);
-    addToAlbum(item)
+    addToAlbum(item);
   };
 
   return (
-    <>
-      <ContentPages>
-        <Typography
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            fontSize: "1.8rem",
-            fontWeight: "600",
-            color: "#722f37",
-            paddingTop: "1.3rem",
-            paddingBottom: "1.3rem",
-          }}
-        >
-          {"Welcome"}
-        </Typography>
-        <TargetCards
-          disabledB1={disabled}
-          disabledB2={disabled}
-          disabledB3={disabled}
-          disabledB4={disabled}
-          onClick={onClick}
-        />
-        <Timer seconds={seconds} />
+    <ContentPages>
+      <Typography
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          fontSize: "1.8rem",
+          fontWeight: "600",
+          color: "#722f37",
+          paddingTop: "1.3rem",
+          paddingBottom: "1.3rem",
+        }}
+      >
+        {"Welcome"}
+      </Typography>
+      <TargetCards disabled={disabled} onClick={onClick} />
+      <Timer seconds={seconds} />
 
-        <SheetContainer onClick={onClickSheet} items={characters} />
-        <EpisodeSheetContainer items={episodes} />
-      </ContentPages>
-    </>
+      <SheetContainer onClick={onClickSheet} items={characters} />
+      <EpisodeSheetContainer items={episodes} />
+    </ContentPages>
   );
 };
