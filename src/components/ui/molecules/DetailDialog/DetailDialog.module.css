@@ -1,0 +1,13 @@
+.general {
+    margin: 2rem;
+}
+
+.dos {
+    display: flex;
+    align-items: center;
+}
+
+.close {
+    position: absolute;
+    right: 1vw;
+}
