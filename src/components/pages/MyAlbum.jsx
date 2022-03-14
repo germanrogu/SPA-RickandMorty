@@ -1,16 +1,31 @@
 import { Grid, Typography } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AlbumContext } from "../../context/AlbumContext";
 import { ButtonCustom } from "../ui/atoms/ButtonCustom/ButtonCustom";
 import { ContentPages } from "../ui/atoms/ContentPages/ContentPages";
-import { Sheet } from "../ui/atoms/Sheet/Sheet";
+import { DetailDialog } from "../ui/molecules/DetailDialog/DetailDialog";
+import { SheetContainer } from "../ui/molecules/SheetContainer/SheetContainer";
 
 export const MyAlbum = () => {
   const { albumArray } = useContext(AlbumContext);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [item, setItem] = useState({});
+
+  const onClickSheet = (item) => {
+    setOpenConfirmation(true);
+    setItem(item);
+  };
 
   return (
     <ContentPages>
+      <DetailDialog
+        open={openConfirmation}
+        onClose={() => setOpenConfirmation(false)}
+        title={"Description"}
+        msgError={"Here you can see the full description"}
+        item={item}
+      />
       <Typography
         style={{
           display: "flex",
@@ -30,16 +45,10 @@ export const MyAlbum = () => {
         spacing={3}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        {albumArray.map((item) => (
-          <Grid item xs={12} md={3} key={item.character.id}>
-            <Sheet
-              image={item.character.image}
-              name={item.character.name}
-              species={item.character.species}
-              location={item.character.location}
-            />
-          </Grid>
-        ))}
+        <SheetContainer
+          onClick={onClickSheet}
+          items={albumArray.map((item) => item.character)}
+        />
       </Grid>
 
       <Typography
@@ -56,7 +65,7 @@ export const MyAlbum = () => {
           : "Empty Album"}
       </Typography>
 
-      <Grid sx={{ display: "flex",justifyContent: "center"}}>
+      <Grid sx={{ display: "flex", justifyContent: "center" }}>
         <Link
           to={`/GetCards`}
           style={{

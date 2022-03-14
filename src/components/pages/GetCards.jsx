@@ -12,7 +12,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export const GetCards = () => {
   const { activeTimer, resetTimer, seconds } = useContext(TimeCardContext);
-  const { addToAlbum } = useContext(AlbumContext);
+  const { addToAlbum , repeatedCharacter } = useContext(AlbumContext);
   const [disabled, setDisabled] = useState(false);
   const [characters, setCharacters] = useState([]);
   const [episodes, setEpisodes] = useState([]);
@@ -78,7 +78,13 @@ export const GetCards = () => {
   const onClickSheet = (item) => {
     console.log("Click en la card", item);
     addToAlbum(item);
+    
   };
+
+  // useEffect(() => {
+  //   console.log(repeatedCharacter)
+  // }, [repeatedCharacter])
+  
 
   return (
     <ContentPages>
