@@ -9,6 +9,7 @@ export const EpisodeSheet = ({ name, episode, air_date }) => {
           <h5> {name} </h5>
           <p>Episode: {episode}</p>
           <p>Air date: {air_date}</p>
+          <p>Category: {'Episode'}</p>
         </div>
       </div>
     </div>

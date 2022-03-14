@@ -14,6 +14,7 @@ export const Sheet = ({ image, name, species, location ,onClick }) => {
           <h5> {name} </h5>
           <p>Species: {species}</p>
           <p>Location: {location.name}</p>
+          <p>Category: {'Character'}</p>
         </div>
       </div>
     </div>

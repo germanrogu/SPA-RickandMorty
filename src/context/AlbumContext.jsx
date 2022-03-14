@@ -1,14 +1,16 @@
 import { createContext, useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const AlbumContext = createContext();
 
 export const AlbumProvider = ({ children }) => {
-  const [albumArray, setAlbumArray] = useState([]);
   const [repeatedCharacter, setRepeatedCharacter] = useState(false);
+  const [albumArray, setAlbumArray] = useLocalStorage([], "albumArray");
 
   const addToAlbum = (character) => {
     if (isInAlbum(character.id)) {
       setRepeatedCharacter(true);
+      // resetRepeatedState();
     } else {
       setRepeatedCharacter(false);
       const newItem = {
@@ -17,6 +19,7 @@ export const AlbumProvider = ({ children }) => {
       setAlbumArray([...albumArray, newItem]);
     }
   };
+
 
   const isInAlbum = (characterId) => {
     return albumArray.some((element) => element.character.id === characterId);

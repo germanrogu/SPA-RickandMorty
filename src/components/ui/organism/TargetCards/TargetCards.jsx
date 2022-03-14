@@ -2,39 +2,33 @@ import { Grid } from "@mui/material";
 import React from "react";
 import { Card } from "../../atoms/Card/Card";
 
-export const TargetCards = ({
-  onClick,
-  disabledB1,
-  disabledB2,
-  disabledB3,
-  disabledB4,
-}) => {
+export const TargetCards = ({ onClick, disabled }) => {
   return (
     <Grid container spacing={3} sx={{ display: "flex" }}>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={6} md={3}>
         <Card
-          disabled={disabledB1}
+          disabled={disabled}
           onClick={() => onClick("Pack1")}
           titleCard={"Pack 1"}
         />
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={6} md={3}>
         <Card
-          disabled={disabledB2}
+          disabled={disabled}
           onClick={() => onClick("Pack2")}
           titleCard={"Pack 2"}
         />
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={6} md={3}>
         <Card
-          disabled={disabledB3}
+          disabled={disabled}
           onClick={() => onClick("Pack3")}
           titleCard={"Pack 3"}
         />
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={6} md={3}>
         <Card
-          disabled={disabledB4}
+          disabled={disabled}
           onClick={() => onClick("Pack4")}
           titleCard={"Pack 4"}
         />
