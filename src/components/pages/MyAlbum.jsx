@@ -23,7 +23,6 @@ export const MyAlbum = () => {
         open={openConfirmation}
         onClose={() => setOpenConfirmation(false)}
         title={"Description"}
-        msgError={"Here you can see the full description"}
         item={item}
       />
       <Typography

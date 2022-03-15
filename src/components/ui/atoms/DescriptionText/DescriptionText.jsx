@@ -8,7 +8,7 @@ import React from "react";
  */
 export const DescriptionText = ({ children, variant }) => {
   return (
-    <Typography style={{ fontWeight: "200" }} variant={variant}>
+    <Typography style={{ fontWeight: "bold" }} variant={variant}>
       {children}
     </Typography>
   );
