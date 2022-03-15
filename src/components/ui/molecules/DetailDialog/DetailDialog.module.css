@@ -2,12 +2,14 @@
     margin: 2rem;
 }
 
-.dos {
-    display: flex;
-    align-items: center;
+.containerImg {
+    text-align: center;
 }
 
-.close {
-    position: absolute;
-    right: 1vw;
+.image {
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    max-width: 65%;
+    height: auto;
+    box-shadow: 0 0 5px 0.3px #71ff1e;
 }
