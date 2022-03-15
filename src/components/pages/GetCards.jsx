@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { TimeCardContext } from "../../context/TimeCardContext";
 import { ContentPages } from "../ui/atoms/ContentPages/ContentPages";
 import { Timer } from "../ui/atoms/Timer/Timer";
@@ -8,15 +8,15 @@ import { TargetCards } from "../ui/organism/TargetCards/TargetCards";
 import axios from "axios";
 import { EpisodeSheetContainer } from "../ui/molecules/EpisodeSheetContainer/EpisodeSheetContainer";
 import { AlbumContext } from "../../context/AlbumContext";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import Swal from "sweetalert2";
 
 export const GetCards = () => {
-  const { activeTimer, resetTimer, seconds } = useContext(TimeCardContext);
-  const { addToAlbum , repeatedCharacter } = useContext(AlbumContext);
-  const [disabled, setDisabled] = useState(false);
+  const { activeTimer, seconds, setClicked, disabled } =
+    useContext(TimeCardContext);
+  const { addToAlbum, isInAlbum, setRepeatedCharacter } =
+    useContext(AlbumContext);
   const [characters, setCharacters] = useState([]);
   const [episodes, setEpisodes] = useState([]);
-  const [clicked, setClicked] = useLocalStorage(false, "clicked");
 
   const randomNumber = (max) => {
     return Math.floor(Math.random() * (max - 1 + 1) + 1);
@@ -34,16 +34,6 @@ export const GetCards = () => {
       }
     }
   };
-
-  useEffect(() => {
-    if (clicked) {
-      seconds < 60 ? setDisabled(true) : setDisabled(false);
-      if (seconds === 60) {
-        resetTimer();
-        setClicked(false);
-      }
-    }
-  }, [clicked, resetTimer, seconds]);
 
   let arrayCharacters = [];
   let arrayEpisodes = [];
@@ -75,16 +65,36 @@ export const GetCards = () => {
     getApi(1, "episodes");
   };
 
-  const onClickSheet = (item) => {
-    console.log("Click en la card", item);
-    addToAlbum(item);
-    
+  const alertToConfirm = (icon, title, textAlert) => {
+    return Swal.fire({
+      icon: `${icon}`,
+      title: `${title}`,
+      text: `${textAlert}`,
+      confirmButtonText: icon === "warning" ? "Dismiss" : "OK",
+      confirmButtonColor: "#96CF4C",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setRepeatedCharacter(false);
+      }
+    });
   };
 
-  // useEffect(() => {
-  //   console.log(repeatedCharacter)
-  // }, [repeatedCharacter])
-  
+  const onClickSheet = (item) => {
+    if (isInAlbum(item.id)) {
+      alertToConfirm(
+        "warning",
+        "Oops... ",
+        "This card is repeated, you already have it in your album"
+      );
+    } else {
+      addToAlbum(item);
+      alertToConfirm(
+        "success",
+        "Your work has been saved",
+        "Card successfully added to your album"
+      );
+    }
+  };
 
   return (
     <ContentPages>
