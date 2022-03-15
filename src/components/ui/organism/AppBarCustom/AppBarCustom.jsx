@@ -55,6 +55,7 @@ export const AppBarCustom = () => {
                   sx={{
                     textDecoration: "none",
                     paddingRight: "1.3rem",
+                    fontWeight: "bold",
                   }}
                 >
                   {page}
