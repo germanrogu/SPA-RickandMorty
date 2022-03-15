@@ -10,7 +10,6 @@ export const AlbumProvider = ({ children }) => {
   const addToAlbum = (character) => {
     if (isInAlbum(character.id)) {
       setRepeatedCharacter(true);
-      // resetRepeatedState();
     } else {
       setRepeatedCharacter(false);
       const newItem = {
@@ -20,12 +19,17 @@ export const AlbumProvider = ({ children }) => {
     }
   };
 
-
   const isInAlbum = (characterId) => {
     return albumArray.some((element) => element.character.id === characterId);
   };
 
-  const value = { albumArray, addToAlbum, isInAlbum, repeatedCharacter };
+  const value = {
+    albumArray,
+    addToAlbum,
+    isInAlbum,
+    repeatedCharacter,
+    setRepeatedCharacter,
+  };
 
   return (
     <AlbumContext.Provider value={value}>{children}</AlbumContext.Provider>
