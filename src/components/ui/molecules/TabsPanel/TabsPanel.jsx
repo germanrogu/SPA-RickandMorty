@@ -1,5 +1,7 @@
 import { Box, styled, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
+import { ListItemCustom } from "../../atoms/ListItemCustom/ListItemCustom";
+import { ListItemLocation } from "../../atoms/ListItemLocation/ListItemLocation";
 import { TabPanel } from "../../atoms/TabPanel/TabPanel";
 
 const a11yProps = (index) => {
@@ -34,7 +36,20 @@ const CustomTabs = styled(Tab)({
   },
 });
 
-export const TabsPanel = ({ itemOne, itemTwo, itemThree }) => {
+export const TabsPanel = ({
+  itemsCharacters,
+  itemTwo,
+  itemThree,
+  onClickPrevious,
+  onClickNext,
+  disabledPrevious,
+  disabledNext,
+  itemsLocation,
+  onClickPreviousLocation,
+  onClickNextLocation,
+  disabledPreviousLocation,
+  disabledNextLocation,
+}) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -49,10 +64,22 @@ export const TabsPanel = ({ itemOne, itemTwo, itemThree }) => {
           <CustomTabs label="Origins" {...a11yProps(2)} />
         </CustomTab>
         <TabPanel value={value} index={0}>
-          {itemOne}
+          <ListItemCustom
+            disabledPrevious={disabledPrevious}
+            disabledNext={disabledNext}
+            onClickPrevious={onClickPrevious}
+            onClickNext={onClickNext}
+            items={itemsCharacters}
+          />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {itemTwo}
+          <ListItemLocation
+            disabledPreviousLocation={disabledPreviousLocation}
+            disabledNextLocation={disabledNextLocation}
+            onClickPreviousLocation={onClickPreviousLocation}
+            onClickNextLocation={onClickNextLocation}
+            itemsLocation={itemsLocation}
+          />
         </TabPanel>
         <TabPanel value={value} index={2}>
           {itemThree}
