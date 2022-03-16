@@ -13,7 +13,7 @@ export const AppRouter = () => {
         <Route path="/GetCards" element={<GetCards />} />
         <Route path="/MyAlbum" element={<MyAlbum />} />
         <Route path="/SeriesInformation" element={<SeriesInformation />} />
-        <Route path="/" element={<Navigate to="/GetCards" />} />
+        <Route path="*" element={<Navigate to="/GetCards" />} />
       </Routes>
     </BrowserRouter>
   );
