@@ -12,10 +12,10 @@ import { ButtonCustom } from "../ButtonCustom/ButtonCustom";
 
 export const ListItemOrigin = ({
   itemOrigin,
-  onClickPrevious,
-  onClickNext,
-  disabledPrevious,
-  disabledNext,
+  onClickPreviousOrigin,
+  onClickNextOrigin,
+  disabledPreviousOrigin,
+  disabledNextOrigin,
 }) => {
   return (
     <List sx={{ width: "100%", maxWidth: 420, bgcolor: "background.paper" }}>
@@ -46,10 +46,10 @@ export const ListItemOrigin = ({
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <ButtonGroup variant="outlined" aria-label="outlined button group">
-          <ButtonCustom disabled={disabledPrevious} onClick={onClickPrevious}>
+          <ButtonCustom disabled={disabledPreviousOrigin} onClick={onClickPreviousOrigin}>
             Previous
           </ButtonCustom>
-          <ButtonCustom disabled={disabledNext} onClick={onClickNext}>
+          <ButtonCustom disabled={disabledNextOrigin} onClick={onClickNextOrigin}>
             Next
           </ButtonCustom>
         </ButtonGroup>

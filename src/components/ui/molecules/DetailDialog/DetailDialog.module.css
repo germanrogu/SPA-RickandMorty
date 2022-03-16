@@ -1,5 +1,6 @@
 .general {
     margin: 2rem;
+    overflow: hidden;
 }
 
 .containerImg {

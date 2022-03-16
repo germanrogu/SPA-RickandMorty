@@ -24,6 +24,7 @@ export const DetailDialog = ({
   onClose,
   title = "Description",
   item,
+  type,
 }) => {
   return (
     <>
@@ -51,9 +52,15 @@ export const DetailDialog = ({
               </Grid>
             </Grid>
 
-            <div className={styles.containerImg}>
-              <img className={styles.image} src={item.image} alt={item.name} />
-            </div>
+            {type === "character" && (
+              <div className={styles.containerImg}>
+                <img
+                  className={styles.image}
+                  src={item.image}
+                  alt={item.name}
+                />
+              </div>
+            )}
 
             <DialogContentCustom>
               <Grid container>
@@ -69,11 +76,20 @@ export const DetailDialog = ({
                   <DescriptionText children={`Id: ${item.id}`} variant={"h6"} />
                 </Grid>
               </Grid>
-
-              <p>Type: {item.type}</p>
-              <p>Species: {item.species}</p>
-              <p>Location: {item.location.name}</p>
-              <p>Category: {"Character"}</p>
+              {type === "character" ? (
+                <>
+                  <p>Type: {item.type}</p>
+                  <p>Species: {item.species}</p>
+                  <p>Location: {item.location.name}</p>
+                  <p>Category: {"Character"}</p>
+                </>
+              ) : (
+                <>
+                  <p>Episode: {item.episode}</p>
+                  <p>Air Date: {item.air_date}</p>
+                  <p>Category: {"Episode"}</p>
+                </>
+              )}
             </DialogContentCustom>
           </div>
         </DialogCustom>

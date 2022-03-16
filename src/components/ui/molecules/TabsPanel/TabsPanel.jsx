@@ -49,6 +49,10 @@ export const TabsPanel = ({
   onClickNextLocation,
   disabledPreviousLocation,
   disabledNextLocation,
+  onClickPreviousOrigin,
+  onClickNextOrigin,
+  disabledPreviousOrigin,
+  disabledNextOrigin,
 }) => {
   const [value, setValue] = useState(0);
 
@@ -82,7 +86,13 @@ export const TabsPanel = ({
           />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <ListItemOrigin itemOrigin={itemOrigin} />
+          <ListItemOrigin
+            disabledPreviousOrigin={disabledPreviousOrigin}
+            disabledNextOrigin={disabledNextOrigin}
+            onClickPreviousOrigin={onClickPreviousOrigin}
+            onClickNextOrigin={onClickNextOrigin}
+            itemOrigin={itemOrigin}
+          />
         </TabPanel>
       </Box>
     </>
