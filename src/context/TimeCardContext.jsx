@@ -37,6 +37,8 @@ export const TimeCardProvider = ({ children }) => {
       if (seconds === 60) {
         resetTimer();
         setClicked(false);
+        localStorage.removeItem("charactersPack");
+        localStorage.removeItem("episodesPack");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
