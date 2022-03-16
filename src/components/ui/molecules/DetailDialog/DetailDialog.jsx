@@ -25,7 +25,6 @@ export const DetailDialog = ({
   title = "Description",
   item,
 }) => {
-  console.log(item);
   return (
     <>
       {Object.keys(item).length !== 0 && (
