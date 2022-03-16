@@ -84,13 +84,15 @@ export const SeriesInformation = () => {
         onClickPrevious={() => handlePreviousPage("characters")}
         onClickNext={() => handleNextPage("characters")}
         itemsCharacters={characters}
-
         disabledPreviousLocation={!infoLocation.prev}
         disabledNextLocation={!infoLocation.next}
         onClickPreviousLocation={() => handlePreviousPage("locations")}
         onClickNextLocation={() => handleNextPage("locations")}
         itemsLocation={location}
-        
+        disabledPreviousOrigin={!infoOrigins.prev}
+        disabledNextOrigin={!infoOrigins.next}
+        onClickPreviousOrigin={() => handlePreviousPage("origin")}
+        onClickNextOrigin={() => handleNextPage("origin")}
         itemOrigin={origins}
       />
     </ContentPages>

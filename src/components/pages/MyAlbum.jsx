@@ -12,10 +12,12 @@ export const MyAlbum = () => {
   const { albumArray, albumArrayEpisode } = useContext(AlbumContext);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [item, setItem] = useState({});
+  const [type, setType] = useState("");
 
-  const onClickSheet = (item) => {
+  const onClickSheet = (item, type) => {
     setOpenConfirmation(true);
     setItem(item);
+    setType(type);
   };
 
   return (
@@ -25,8 +27,9 @@ export const MyAlbum = () => {
         onClose={() => setOpenConfirmation(false)}
         title={"Description"}
         item={item}
+        type={type}
       />
-      <Divider sx={{ width: "100%" ,paddingBottom:"1.5rem" }}>
+      <Divider sx={{ width: "100%", paddingBottom: "1.5rem" }}>
         <Typography
           style={{
             display: "flex",
@@ -69,7 +72,7 @@ export const MyAlbum = () => {
         </Divider>
 
         <EpisodeSheetContainer
-          //onClick={onClickSheet}
+          onClick={onClickSheet}
           items={albumArrayEpisode.map((item) => item.character)}
         />
       </Grid>
