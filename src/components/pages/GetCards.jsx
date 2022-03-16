@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { TimeCardContext } from "../../context/TimeCardContext";
 import { ContentPages } from "../ui/atoms/ContentPages/ContentPages";
 import { Timer } from "../ui/atoms/Timer/Timer";
@@ -9,60 +9,50 @@ import axios from "axios";
 import { EpisodeSheetContainer } from "../ui/molecules/EpisodeSheetContainer/EpisodeSheetContainer";
 import { AlbumContext } from "../../context/AlbumContext";
 import Swal from "sweetalert2";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export const GetCards = () => {
   const { activeTimer, seconds, setClicked, disabled } =
     useContext(TimeCardContext);
-  const { addToAlbum, isInAlbum, setRepeatedCharacter } =
-    useContext(AlbumContext);
-  const [characters, setCharacters] = useState([]);
-  const [episodes, setEpisodes] = useState([]);
+  const { addToAlbum, isInAlbum } = useContext(AlbumContext);
+
+  const [characters, setCharacters] = useLocalStorage([], "charactersPack");
+  const [episodes, setEpisodes] = useLocalStorage([], "episodesPack");
 
   const randomNumber = (max) => {
     return Math.floor(Math.random() * (max - 1 + 1) + 1);
   };
 
-  const getApi = (iterations, option) => {
-    let url;
-    for (let i = 0; i < iterations; i++) {
-      if (option === "characters") {
-        url = `https://rickandmortyapi.com/api/character/${randomNumber(826)}`;
-        fetchCharacters(url, option);
-      } else if (option === "episodes") {
-        url = `https://rickandmortyapi.com/api/episode/${randomNumber(51)}`;
-        fetchCharacters(url, option);
-      }
-    }
-  };
+  let url = `https://rickandmortyapi.com/api/character/${randomNumber(
+    826
+  )},${randomNumber(826)},${randomNumber(826)},${randomNumber(826)}`;
+  let urlEpisodes = `https://rickandmortyapi.com/api/episode/${randomNumber(
+    51
+  )}`;
 
-  let arrayCharacters = [];
-  let arrayEpisodes = [];
+  const fetch = () => {
+    const requestOne = axios.get(url);
+    const requestTwo = axios.get(urlEpisodes);
 
-  const fetchCharacters = (url, option) => {
     axios
-      .get(url)
-      .then((data) => {
-        let objectData = data.data;
-
-        if (option === "characters") {
-          arrayCharacters.push(objectData);
-          setCharacters(arrayCharacters);
-        } else if (option === "episodes") {
-          arrayEpisodes.push(objectData);
-          setEpisodes(arrayEpisodes);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+      .all([requestOne, requestTwo])
+      .then(
+        axios.spread((...responses) => {
+          const responseOne = responses[0];
+          const responseTwo = responses[1];
+          setCharacters(responseOne.data);
+          setEpisodes([responseTwo.data]);
+        })
+      )
+      .catch((errors) => {
+        console.error(errors);
       });
   };
 
   const onClick = (target) => {
-    console.log("Cual", target);
     activeTimer();
     setClicked(true);
-    getApi(4, "characters");
-    getApi(1, "episodes");
+    fetch();
   };
 
   const alertToConfirm = (icon, title, textAlert) => {
@@ -72,22 +62,18 @@ export const GetCards = () => {
       text: `${textAlert}`,
       confirmButtonText: icon === "warning" ? "Dismiss" : "OK",
       confirmButtonColor: "#96CF4C",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setRepeatedCharacter(false);
-      }
     });
   };
 
-  const onClickSheet = (item) => {
-    if (isInAlbum(item.id)) {
+  const onClickSheet = (item, type) => {
+    if (isInAlbum(item.id, type)) {
       alertToConfirm(
         "warning",
         "Oops... ",
         "This card is repeated, you already have it in your album"
       );
     } else {
-      addToAlbum(item);
+      addToAlbum(item, type);
       alertToConfirm(
         "success",
         "Your work has been saved",
@@ -114,8 +100,16 @@ export const GetCards = () => {
       <TargetCards disabled={disabled} onClick={onClick} />
       <Timer seconds={seconds} />
 
-      <SheetContainer onClick={onClickSheet} items={characters} />
-      <EpisodeSheetContainer items={episodes} />
+      <SheetContainer
+        buttonAdd={"card"}
+        onClick={onClickSheet}
+        items={characters}
+      />
+      <EpisodeSheetContainer
+        buttonAdd={"card"}
+        onClick={onClickSheet}
+        items={episodes}
+      />
     </ContentPages>
   );
 };

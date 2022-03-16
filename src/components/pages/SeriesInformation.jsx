@@ -7,67 +7,60 @@ import { TabsPanel } from "../ui/molecules/TabsPanel/TabsPanel";
 export const SeriesInformation = () => {
   const [characters, setCharacters] = useState([]);
   const [info, setInfo] = useState({});
+  const [origins, setOrigins] = useState([]);
 
   const [location, setLocation] = useState([]);
   const [infoLocation, setInfoLocation] = useState({});
+  const [infoOrigins, setInfoOrigins] = useState({});
 
   const url = "https://rickandmortyapi.com/api/character";
   const urlLocation = "https://rickandmortyapi.com/api/location";
 
-  const fetchCharacters = (url) => {
+  const fetch = (url, type) => {
     axios
       .get(url)
       .then((data) => {
-        setCharacters(data.data.results);
-        setInfo(data.data.info);
+        if (type === "characters") {
+          setCharacters(data.data.results);
+          setInfo(data.data.info);
+        } else if (type === "locations") {
+          setLocation(data.data.results);
+          setInfoLocation(data.data.info);
+        } else if (type === "origin") {
+          setOrigins(data.data.results);
+          setInfoOrigins(data.data.info);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const handleNextPage = () => {
-    fetchCharacters(info.next);
+  const handleNextPage = (infoType) => {
+    infoType === "characters"
+      ? fetch(info.next, "characters")
+      : infoType === "locations"
+      ? fetch(infoLocation.next, "locations")
+      : fetch(infoOrigins.next, "origin");
+
     window.scrollTo(0, 0);
   };
 
-  const handlePreviousPage = () => {
-    fetchCharacters(info.prev);
-    window.scrollTo(0, 0);
-  };
+  const handlePreviousPage = (infoType) => {
+    infoType === "characters"
+      ? fetch(info.prev, "characters")
+      : infoType === "locations"
+      ? fetch(infoLocation.prev, "locations")
+      : fetch(infoOrigins.prev, "origin");
 
-  useEffect(() => {
-    fetchCharacters(url);
-  }, []);
-
-  //-------------------------------------------------------------------//
-
-  const fetchLocation = (url) => {
-    axios
-      .get(url)
-      .then((data) => {
-        setLocation(data.data.results);
-        setInfoLocation(data.data.info);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const onClickNextLocation = () => {
-    fetchLocation(infoLocation.next);
-    window.scrollTo(0, 0);
-  };
-
-  const onClickPreviousLocation = () => {
-    fetchLocation(infoLocation.prev);
     window.scrollTo(0, 0);
   };
 
   useEffect(() => {
-    fetchLocation(urlLocation);
+    fetch(url, "characters");
+    fetch(urlLocation, "locations");
+    fetch(url, "origin");
   }, []);
-
 
   return (
     <ContentPages>
@@ -88,16 +81,17 @@ export const SeriesInformation = () => {
       <TabsPanel
         disabledPrevious={!info.prev}
         disabledNext={!info.next}
-        onClickPrevious={handlePreviousPage}
-        onClickNext={handleNextPage}
+        onClickPrevious={() => handlePreviousPage("characters")}
+        onClickNext={() => handleNextPage("characters")}
         itemsCharacters={characters}
 
         disabledPreviousLocation={!infoLocation.prev}
         disabledNextLocation={!infoLocation.next}
-        onClickPreviousLocation={onClickPreviousLocation}
-        onClickNextLocation={onClickNextLocation}
+        onClickPreviousLocation={() => handlePreviousPage("locations")}
+        onClickNextLocation={() => handleNextPage("locations")}
         itemsLocation={location}
-        itemThree={"3"}
+        
+        itemOrigin={origins}
       />
     </ContentPages>
   );
