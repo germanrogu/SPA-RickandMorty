@@ -2,6 +2,7 @@ import { Box, styled, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import { ListItemCustom } from "../../atoms/ListItemCustom/ListItemCustom";
 import { ListItemLocation } from "../../atoms/ListItemLocation/ListItemLocation";
+import { ListItemOrigin } from "../../atoms/ListItemOrigin/ListItemOrigin";
 import { TabPanel } from "../../atoms/TabPanel/TabPanel";
 
 const a11yProps = (index) => {
@@ -38,8 +39,7 @@ const CustomTabs = styled(Tab)({
 
 export const TabsPanel = ({
   itemsCharacters,
-  itemTwo,
-  itemThree,
+  itemOrigin,
   onClickPrevious,
   onClickNext,
   disabledPrevious,
@@ -82,7 +82,7 @@ export const TabsPanel = ({
           />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {itemThree}
+          <ListItemOrigin itemOrigin={itemOrigin} />
         </TabPanel>
       </Box>
     </>

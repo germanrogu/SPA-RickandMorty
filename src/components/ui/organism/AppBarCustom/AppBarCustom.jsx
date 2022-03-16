@@ -22,6 +22,7 @@ export const AppBarCustom = () => {
             item
             xs={9}
             sx={{
+              justifyContent: "end",
               flexGrow: 1,
               display: { xs: "flex", md: "none" },
               paddingLeft: "1.5rem",
@@ -40,7 +41,7 @@ export const AppBarCustom = () => {
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
-              justifyContent: "center",
+              justifyContent: "end",
               alignItems: "center",
             }}
           >

@@ -1,14 +1,15 @@
-import { Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AlbumContext } from "../../context/AlbumContext";
 import { ButtonCustom } from "../ui/atoms/ButtonCustom/ButtonCustom";
 import { ContentPages } from "../ui/atoms/ContentPages/ContentPages";
 import { DetailDialog } from "../ui/molecules/DetailDialog/DetailDialog";
+import { EpisodeSheetContainer } from "../ui/molecules/EpisodeSheetContainer/EpisodeSheetContainer";
 import { SheetContainer } from "../ui/molecules/SheetContainer/SheetContainer";
 
 export const MyAlbum = () => {
-  const { albumArray } = useContext(AlbumContext);
+  const { albumArray, albumArrayEpisode } = useContext(AlbumContext);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [item, setItem] = useState({});
 
@@ -25,19 +26,21 @@ export const MyAlbum = () => {
         title={"Description"}
         item={item}
       />
-      <Typography
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          fontSize: "1.8rem",
-          fontWeight: "600",
-          color: "#722f37",
-          paddingTop: "1.3rem",
-          paddingBottom: "1.8rem",
-        }}
-      >
-        {" My Album "}
-      </Typography>
+      <Divider sx={{ width: "100%" ,paddingBottom:"1.5rem" }}>
+        <Typography
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            fontSize: "1.8rem",
+            fontWeight: "600",
+            color: "#722f37",
+            paddingTop: "2.5rem",
+            paddingBottom: "2.5rem",
+          }}
+        >
+          {"  Characters  "}
+        </Typography>
+      </Divider>
 
       <Grid
         container
@@ -48,15 +51,38 @@ export const MyAlbum = () => {
           onClick={onClickSheet}
           items={albumArray.map((item) => item.character)}
         />
+
+        <Divider sx={{ width: "100%" }}>
+          <Typography
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "1.8rem",
+              fontWeight: "600",
+              color: "#722f37",
+              paddingTop: "2.5rem",
+              paddingBottom: "2.5rem",
+            }}
+          >
+            {"  Episodes  "}
+          </Typography>
+        </Divider>
+
+        <EpisodeSheetContainer
+          //onClick={onClickSheet}
+          items={albumArrayEpisode.map((item) => item.character)}
+        />
       </Grid>
 
       <Typography
         style={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "2rem",
-          marginBottom: "2rem",
           fontSize: "1.2rem",
+          fontWeight: "bold",
+          color: "#722f37",
+          paddingTop: "2.5rem",
+          paddingBottom: "1rem",
         }}
       >
         {albumArray.length > 0
